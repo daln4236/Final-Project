@@ -1,17 +1,118 @@
-# Archivos de Python
-*.pyc
-__pycache__/
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medical Terminology Assessments</title>
 
-# Base de datos de Django
-db.sqlite3
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 
-# Entornos virtuales
-env/
-venv/
+    <!-- Normalize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
 
-# Archivos de Django estáticos y medios
-/static/
-/media/
+    <!-- Custom Styles -->
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fb;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
 
-# Archivos de configuración de VS Code
-.vscode/
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #007acc;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #007acc;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #005f99;
+      }
+
+      img {
+        margin-top: 20px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to Medical Terminology Assessments</h1>
+      <p>Select a quiz or upload an image to customize your experience.</p>
+
+      <input
+        id="image-url"
+        type="text"
+        placeholder="Enter the URL of an image..."
+      />
+      <button onclick="displayImage()">Show Image</button>
+
+      <div id="image-container">
+        <!-- The image will be displayed here -->
+      </div>
+
+      <button
+        hx-get="/assessments/"
+        hx-trigger="click"
+        hx-target="#quiz-list"
+        hx-indicator=".loading"
+      >
+        Load Available Quizzes
+      </button>
+
+      <p class="loading" style="display: none;">Loading quizzes...</p>
+
+      <div id="quiz-list" class="quiz-list">
+        <!-- Quiz list will be dynamically loaded here -->
+      </div>
+    </div>
+
+    <script>
+      function displayImage() {
+        const imageUrl = document.getElementById("image-url").value;
+        const imageContainer = document.getElementById("image-container");
+
+        if (imageUrl) {
+          imageContainer.innerHTML = `<img src="${imageUrl}" alt="User Provided Image" />`;
+        } else {
+          alert("Please enter a valid image URL.");
+        }
+      }
+    </script>
+  </body>
+</html>
